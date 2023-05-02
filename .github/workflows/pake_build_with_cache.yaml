@@ -88,15 +88,12 @@ jobs:
       run: |
         npm run build:all-windows
 
-    - name: Upload files
-      # arg info: https://github.com/ncipollo/release-action#release-action
-      uses: ncipollo/release-action@v1
+    - name: Upload archive
+      uses: actions/upload-artifact@v3
       with:
-        allowUpdates: true
-        prerelease: ${{ inputs.is_pre_release }}
-        artifacts: "output/*/*.*"
-        tag: ${{ inputs.version }}
-        token: ${{ secrets.GITHUB_TOKEN }}
+        name: output-${{ inputs.platform }}.zip
+        path: "output/*/*.*"
+        retention-days: 3
 
     - name: rust cache store
       uses: actions/cache/save@v3
